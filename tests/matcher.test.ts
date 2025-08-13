@@ -11,6 +11,10 @@ const spaces = /\s+/gm;
 const numbers = /[0-9]+/gm;
 
 describe('matchRule', () => {
+  test('non-matching rule', () => {
+    expect(Array.from(matchRule(spaces, 'abcdef'))).toEqual([]);
+  });
+
   test('single rule', () => {
     expect(Array.from(matchRule(spaces, '   aa  bb '))).toEqual([
       {
@@ -84,6 +88,21 @@ describe('matchRule', () => {
 });
 
 describe('matchAllRules', () => {
+  test('empty rules', () => {
+    expect(Array.from(matchAllRules('abc123', {}))).toEqual([]);
+  });
+
+  test('non-matching rules', () => {
+    expect(
+      Array.from(
+        matchAllRules('abcdef', {
+          spaces,
+          numbers,
+        }),
+      ),
+    ).toEqual([]);
+  });
+
   test('multiple non-overlapping rules', () => {
     expect(
       Array.from(
