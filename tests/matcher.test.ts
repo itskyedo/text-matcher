@@ -10,6 +10,17 @@ const newlines = /\n/gm;
 const spaces = /\s+/gm;
 const numbers = /[0-9]+/gm;
 
+function* customRule(text: string): Generator<Match, undefined> {
+  for (let i = 0; i < text.length; i++) {
+    yield {
+      start: i,
+      end: i,
+      value: text[i],
+      groups: undefined,
+    };
+  }
+}
+
 describe('matchRule', () => {
   test('non-matching rule', () => {
     expect(Array.from(matchRule(spaces, 'abcdef'))).toEqual([]);
@@ -81,6 +92,29 @@ describe('matchRule', () => {
         start: 56,
         end: 56,
         value: '\n',
+        groups: undefined,
+      },
+    ]);
+  });
+
+  test('generator rule', () => {
+    expect(Array.from(matchRule(customRule, 'abc'))).toEqual([
+      {
+        start: 0,
+        end: 0,
+        value: 'a',
+        groups: undefined,
+      },
+      {
+        start: 1,
+        end: 1,
+        value: 'b',
+        groups: undefined,
+      },
+      {
+        start: 2,
+        end: 2,
+        value: 'c',
         groups: undefined,
       },
     ]);
@@ -389,42 +423,6 @@ describe('matchAllRules', () => {
             value: '\n',
           },
         ]),
-      },
-    ]);
-  });
-});
-
-describe('rules', () => {
-  test('handles generator rules', () => {
-    function* customRule(text: string): Generator<Match, undefined> {
-      for (let i = 0; i < text.length; i++) {
-        yield {
-          start: i,
-          end: i,
-          value: text[i],
-          groups: undefined,
-        };
-      }
-    }
-
-    expect(Array.from(matchRule(customRule, 'abc'))).toEqual([
-      {
-        start: 0,
-        end: 0,
-        value: 'a',
-        groups: undefined,
-      },
-      {
-        start: 1,
-        end: 1,
-        value: 'b',
-        groups: undefined,
-      },
-      {
-        start: 2,
-        end: 2,
-        value: 'c',
-        groups: undefined,
       },
     ]);
   });
