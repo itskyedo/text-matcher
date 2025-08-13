@@ -19,11 +19,11 @@ export interface RuleMatch extends Match {
   rule: string;
 }
 
-export type MatcherFunction = (text: string) => Generator<Match, void>;
+export type MatcherFunction = (text: string) => Generator<Match, undefined>;
 
 interface RuleState {
   rule: string;
-  iterator: Generator<Match, void>;
+  iterator: Generator<Match, undefined>;
   current: Match;
 }
 
@@ -34,7 +34,10 @@ interface RuleState {
  * @param text - The text to parse.
  * @yields
  */
-export function* matchRule(rule: Rule, text: string): Generator<Match, void> {
+export function* matchRule(
+  rule: Rule,
+  text: string,
+): Generator<Match, undefined> {
   if (rule instanceof RegExp) {
     if (!rule.flags.includes('g') || !rule.flags.includes('m')) {
       console.warn(
@@ -70,7 +73,7 @@ export function* matchRule(rule: Rule, text: string): Generator<Match, void> {
 export function* matchAllRules(
   text: string,
   rules: Record<string, Rule>,
-): Generator<MatchGroup, void> {
+): Generator<MatchGroup, undefined> {
   const ruleStates: RuleState[] = [];
   let currentStart: number = Infinity;
   let currentEnd: number = -Infinity;

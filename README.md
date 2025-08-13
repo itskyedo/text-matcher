@@ -133,7 +133,7 @@ Alternatively, you can use a `for-of` or `while` loop to iterate over each match
 ```typescript
 import { type Match, matchRule } from 'text-matcher';
 
-function* customRule(text: string): Generator<Match, void> {
+function* customRule(text: string): Generator<Match, undefined> {
   for (let i = 0; i < text.length; i++) {
     yield {
       start: i,

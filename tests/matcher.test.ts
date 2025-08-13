@@ -377,7 +377,7 @@ describe('matchAllRules', () => {
 
 describe('rules', () => {
   test('handles generator rules', () => {
-    function* customRule(text: string): Generator<Match, void> {
+    function* customRule(text: string): Generator<Match, undefined> {
       for (let i = 0; i < text.length; i++) {
         yield {
           start: i,
