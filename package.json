@@ -1,6 +1,6 @@
 {
   "name": "text-matcher",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "Kyedo <hey@kyedo.dev> (https://github.com/itskyedo)",
   "description": "A simple text matching library",
   "license": "MIT",
